@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenVault Settings</title>
+<link rel="stylesheet" href="bulma.min.css">
+<link rel="stylesheet" href="ui.css">
+<script src="jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <div class="card-content">
+      <h1 class="title is-4">Settings & Data Management</h1>
+      <p class="subtitle is-6">Manage backups, imports, and advanced options</p>
+
+      <!-- Security Settings -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <div class="card-header-title">Security & Privacy</div>
+        </div>
+        <div class="card-content">
+          <div class="field">
+            <label class="checkbox">
+              <input id="autoSave" type="checkbox">
+              <strong>Auto-save credentials</strong>
+            </label>
+          </div>
+          <div class="field">
+            <label class="checkbox">
+              <input id="autoFill" type="checkbox">
+              <strong>Show autofill suggestions</strong>
+            </label>
+          </div>
+          <div class="field">
+            <label class="checkbox">
+              <input id="enableLiveChecker" type="checkbox">
+              <strong>Enable live password strength checker on pages</strong>
+            </label>
+          </div>
+          <div class="field">
+            <label class="label">Auto-lock vault after (minutes)</label>
+            <div class="control">
+              <input id="lockTimeout" class="input" type="number" value="5" min="0" max="1440" step="1">
+            </div>
+          </div>
+          <div class="field">
+              <div class="control">
+              <button id="saveSettingsBtn" class="button is-primary lv-btn-primary">Save Settings</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Management -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <div class="card-header-title">Data Management</div>
+        </div>
+        <div class="card-content">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+            <button id="exportBtn" class="button is-info lv-btn-accent">Export Encrypted Backup</button>
+            <button id="exportJsonBtn" class="button is-info lv-btn-accent">Export JSON</button>
+          </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <button id="importBtn" class="button lv-btn-ghost">Import Backup</button>
+            <button id="clearBtn" class="button is-danger lv-btn-danger">Clear Vault</button>
+          </div>
+          <input id="fileInput" type="file" accept=".json" style="display:none">
+        </div>
+      </div>
+
+      <!-- Advanced Settings -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <div class="card-header-title">Advanced Settings</div>
+        </div>
+        <div class="card-content">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+            <button id="viewAuditBtn" class="button lv-btn-ghost">View Audit Log</button>
+            <button id="clearAuditBtn" class="button is-danger lv-btn-danger">Clear Audit Log</button>
+          </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <button id="removeDevBtn" class="button is-danger lv-btn-danger">Reset Vault</button>
+            <button id="touch" class="button lv-btn-ghost">Keep Alive</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- About & Stats -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-title">About & Statistics</div>
+        </div>
+        <div class="card-content">
+          <div class="field">
+            <div class="control">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-bottom: 12px;">
+                <div>
+                  <div class="stat-number" id="statTotalCredentials">0</div>
+                  <div class="stat-label">Credentials</div>
+                </div>
+                <div>
+                  <div class="stat-number" id="statUniqueDomains">0</div>
+                  <div class="stat-label">Domains</div>
+                </div>
+                <div>
+                  <div class="stat-number" id="statVaultSize">0 B</div>
+                  <div class="stat-label">Vault Size</div>
+                </div>
+              </div>
+              <div style="padding: 12px; background: var(--mint-cream); border-radius: 8px; border: 1px solid rgba(0,0,0,0.06);">
+                <div style="font-size: 14px; color: var(--warm-gray); margin-bottom: 6px;">Last modified: <span id="statLastModified">Never</span></div>
+                <div style="font-size: 14px; color: var(--warm-gray);">All data is encrypted locally</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>

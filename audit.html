@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Audit Log - OpenVault</title>
+<link rel="stylesheet" href="bulma.min.css">
+</head>
+<body>
+<section class="section">
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-title">
+          <h1 class="title is-4">Audit Log</h1>
+        </div>
+        <div class="card-header-icon">
+          <button id="refreshBtn" class="button is-small">Refresh</button>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="buttons">
+          <button id="exportBtn" class="button is-info">Export Log</button>
+          <button id="clearBtn" class="button is-danger">Clear Log</button>
+        </div>
+        <div id="logContainer" class="content">
+          <p class="has-text-grey">Loading audit log...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="audit.js"></script>
+</body>
+</html>

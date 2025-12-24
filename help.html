@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Help - OpenVault</title>
+<link rel="stylesheet" href="bulma.min.css">
+</head>
+<body>
+<div class="modal is-active">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">OpenVault - Help & Security Guide</p>
+      <button class="delete" onclick="window.close()"></button>
+    </header>
+    <section class="modal-card-body">
+      <div class="content">
+        <h4>Welcome to OpenVault!</h4>
+        <p>Your passwords are protected with military-grade encryption:</p>
+        <ul>
+          <li><strong>PBKDF2 Key Derivation:</strong> 400,000 iterations with SHA-256</li>
+          <li><strong>AES-256-GCM Encryption:</strong> Authenticated encryption with integrity</li>
+          <li><strong>HMAC-SHA256:</strong> Additional integrity verification</li>
+          <li><strong>Local Storage Only:</strong> No data ever leaves your device</li>
+        </ul>
+
+        <h5>Getting Started</h5>
+        <ol>
+          <li>Create a strong master password (remember it!)</li>
+          <li>Add your credentials using the vault interface</li>
+          <li>Enable autofill and autosave in settings</li>
+          <li>Use the password generator for strong passwords</li>
+        </ol>
+
+        <h5>Features</h5>
+        <ul>
+          <li><strong>Autofill:</strong> Automatically fills login forms on websites</li>
+          <li><strong>Autosave:</strong> Saves new credentials when you log in</li>
+          <li><strong>Password Generator:</strong> Creates strong, random passwords</li>
+          <li><strong>Export/Import:</strong> Backup and restore your vault</li>
+          <li><strong>Audit Log:</strong> Track all vault activities</li>
+        </ul>
+
+        <h5>Security Best Practices</h5>
+        <ul>
+          <li>Use a unique, strong master password</li>
+          <li>Enable auto-lock for security</li>
+          <li>Regularly export backups</li>
+          <li>Use generated passwords for maximum security</li>
+          <li>Never share your master password</li>
+        </ul>
+
+        <div class="notification is-info is-light">
+          <strong>Important:</strong> Your master password cannot be recovered. Keep it safe!
+        </div>
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-primary" onclick="window.close()">Got it!</button>
+    </footer>
+  </div>
+</div>
+</body>
+</html>

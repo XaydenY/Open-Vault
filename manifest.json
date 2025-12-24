@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "OpenVault",
+  "version": "1.0",
+  "description": "OpenVault — a local, offline password manager with strong encryption, autofill, and autosave.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "icons": {
+    "128": "icons/openvault.svg"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "OpenVault",
+    "default_icon": "icons/openvault.svg"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: https://*; connect-src 'self' https://*; object-src 'self'"
+  }
+}

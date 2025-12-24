@@ -1,0 +1,671 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenVault</title>
+<link rel="stylesheet" href="bulma.min.css">
+<link rel="stylesheet" href="ui.css">
+<script src="jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <div id="fallback" class="card">
+    <div class="card-content text-center">
+      <div class="title is-5 mb-2">OpenVault</div>
+      <div class="subtitle is-7 mb-3">Initializing…</div>
+      <div style="display: flex; justify-content: center; margin: 20px 0;">
+        <svg class="pl" width="120" height="120" viewBox="0 0 240 240">
+          <circle class="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" stroke="#AAD2BA" stroke-width="20" stroke-dasharray="0 660" stroke-dashoffset="-330" stroke-linecap="round"></circle>
+          <circle class="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none" stroke="#272D2D" stroke-width="20" stroke-dasharray="0 220" stroke-dashoffset="-110" stroke-linecap="round"></circle>
+          <circle class="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none" stroke="#D9FFF5" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>
+          <circle class="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none" stroke="#A1674A" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>
+        </svg>
+      </div>
+      <div id="popupDebug" class="mt-3 text-left has-text-danger is-hidden"></div>
+    </div>
+  </div>
+
+  <div class="app-header">
+    <div class="logo-box">
+      <div class="app-title">
+        <h1 class="title-lg">OpenVault</h1>
+        <p class="lead">Secure password management</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button id="helpBtn" class="button header-action lv-btn-ghost" title="Help & Documentation">
+        <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a9 9 0 100 18 9 9 0 000-18z"/><path d="M11 10h1v1"/><path d="M11 14h2"/></svg>
+        <span>Help</span>
+      </button>
+
+      <button id="feedbackBtn" class="button header-action lv-btn-ghost" title="Send feedback">
+        <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V7l-3 2-2-1-8 6v3l6-4 2 1 3-2 3 2v-6z"></path></svg>
+        <span>Feedback</span>
+      </button>
+
+
+    </div>
+  </div>
+
+  <div id="app">
+    <div id="onboardView" style="display:none;">
+      <div class="card">
+        <div class="card-content centered-content">
+          <div class="icon-badge">
+            <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v5c0 5-3.5 9-7 10-3.5-1-7-5-7-10V6l7-4z"/></svg>
+          </div>
+
+          <h1 class="title-lg">Welcome to OpenVault</h1>
+          <p class="small-muted" style="margin-bottom:24px;">Create your secure password vault. All data is encrypted locally and never leaves your device.</p>
+
+          <div class="feature-grid">
+            <div class="feature-item"><div class="feature-icon"><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="18" height="11" rx="2"/><path d="M7 10V7a5 5 0 0110 0v3"/></svg></div><div class="feature-text">End-to-end encryption</div></div>
+            <div class="feature-item"><div class="feature-icon"><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="17" r="3"/><path d="M10 14l8-8"/><path d="M21 3l-6 6"/></svg></div><div class="feature-text">Password generator</div></div>
+            <div class="feature-item"><div class="feature-icon"><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v9"/><path d="M5 21h14"/></svg></div><div class="feature-text">Auto-fill & save</div></div>
+            <div class="feature-item"><div class="feature-icon"><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div><div class="feature-text">Offline first</div></div>
+          </div>
+
+          <form class="form-center">
+            <div class="form-group">
+              <label class="form-label">
+                <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="18" height="11" rx="2"/><path d="M7 10V7a5 5 0 0110 0v3"/></svg>
+                Master Password
+              </label>
+              <div class="group">
+                <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon" aria-hidden="true"><path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linejoin="round" stroke-linecap="round"></path></svg>
+                <input id="onboardMaster" class="form-input input" type="password" placeholder="Create a strong master password" autocomplete="new-password" spellcheck="false">
+                  <div class="input-status" id="masterStrengthIcon">
+                    <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+                  </div>
+                <div class="password-toggle" data-target="onboardMaster">
+                  <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                </div>
+              </div>
+              <div class="form-help" id="masterStrengthText">
+                <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0118 0"/><path d="M12 12v-6"/></svg>
+                Password strength: Weak
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+                Confirm Password
+              </label>
+              <div class="group">
+                <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon" aria-hidden="true"><path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linejoin="round" stroke-linecap="round"></path></svg>
+                <input id="onboardConfirm" class="form-input input" type="password" placeholder="Confirm your master password" autocomplete="new-password" spellcheck="false">
+                  <div class="input-status" id="confirmMatchIcon">
+                    <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+                  </div>
+                  <div class="password-toggle" data-target="onboardConfirm">
+                    <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </div>
+              </div>
+              <div class="form-help" id="confirmMatchText">
+                <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                Passwords must match
+              </div>
+            </div>
+
+            <div class="notification is-danger" id="onboardError" style="display:none; margin-bottom: 24px;">
+              <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+              <span id="onboardErrorText"></span>
+            </div>
+
+            <button id="onboardSetBtn" class="button is-primary lv-btn-primary is-fullwidth" type="button" disabled>
+              <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px"><path d="M9 12l2 2 4-4"/></svg>
+              Create Secure Vault
+            </button>
+
+            <div style="text-align: center;">
+              <span class="small-muted">Already have a vault? </span>
+              <a href="#" id="switchToUnlock" style="font-size: 14px; color: var(--sage-green); text-decoration: none; font-weight: 500;">
+                Unlock existing vault
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div id="lockedView">
+      <div class="card">
+        <div class="card-content centered-content">
+              <div class="icon-badge icon-badge--surface">
+                <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="18" height="11" rx="2"/><path d="M7 10V7a5 5 0 0110 0v3"/></svg>
+              </div>
+
+              <h2 class="title-lg">Access Your Vault</h2>
+              <p class="small-muted" style="margin-bottom:32px">Enter your master password to unlock your secure vault</p>
+
+              <form class="form-center">
+            <div class="field">
+              <label class="label">
+                <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px"><rect x="3" y="10" width="18" height="11" rx="2"/><path d="M7 10V7a5 5 0 0110 0v3"/></svg>
+                Master Password
+              </label>
+              <div class="control">
+                <div class="group">
+                  <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon" aria-hidden="true"><path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linejoin="round" stroke-linecap="round"></path></svg>
+                  <input id="masterInput" class="input" type="password" placeholder="Enter master password" autocomplete="current-password" spellcheck="false">
+                  <div class="password-toggle" data-target="masterInput">
+                    <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <button id="masterBtn" class="button is-primary lv-btn-primary is-fullwidth" >
+                  <span class="icon">
+                    <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0"/></svg>
+                  </span>
+                  Unlock Vault
+                </button>
+              </div>
+            </div>
+
+            <div id="busySpinner" style="display:none; margin-top: 24px;">
+              <div style="display: flex; align-items: center; justify-content: center; gap: 12px; color: var(--warm-gray);">
+                <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="font-size:20px"><path d="M21 12a9 9 0 10-9 9"/></svg>
+                <span style="font-size: 14px;">Decrypting vault...</span>
+              </div>
+            </div>
+
+            <div id="statusMsg" class="notification is-info" style="margin-top: 24px;">
+              <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+              Enter your master password to access your secure vault
+            </div>
+
+            <div style="margin-top: 24px; text-align: center;">
+              <a href="#" id="resetVaultLink" class="small-muted" style="text-decoration:none;">
+                <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                Reset vault (if corrupted)
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Unlocked View -->
+    <div id="unlockedView" style="display:none">
+      <!-- Tabs - Minimalist Design -->
+      <div class="tabs">
+        <ul>
+          <li id="tab-vault" class="is-active">
+            <a>
+              <span class="icon is-small">
+                <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18v12H3z"/><path d="M6 6v-2h12v2"/></svg>
+              </span>
+              Vault
+            </a>
+          </li>
+          <li id="tab-settings">
+            <a>
+              <span class="icon is-small">
+                <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06A2 2 0 017.2 2.34l.06.06a1.65 1.65 0 001.82.33h.09A1.65 1.65 0 0011 2.76V2a2 2 0 014 0v.09c.36.07.69.25 1 .51h.09a1.65 1.65 0 001.82-.33l.06-.06A2 2 0 0120.66 6.2l-.06.06a1.65 1.65 0 00-.33 1.82v.09c.26.31.44.64.51 1H22a2 2 0 010 4h-.09c-.07.36-.25.69-.51 1z"/><circle cx="12" cy="12" r="3"/></svg>
+              </span>
+              Settings
+            </a>
+          </li>
+          <li id="tab-generator">
+            <a>
+              <span class="icon is-small mr-1">
+                <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 11l6 6M8 3l2 2"/><path d="M3 21l6-6"/></svg>
+              </span>
+              Generator
+            </a>
+          </li>
+          <li id="tab-security">
+            <a>
+              <span class="icon is-small">
+                <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v5c0 5-3.5 9-7 10-3.5-1-7-5-7-10V6l7-4z"></path></svg>
+              </span>
+              Security
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Vault Tab -->
+      <div id="vault-tab" class="tab-content">
+        <div class="level mb-4">
+          <div class="level-left" style="flex-direction:column;align-items:flex-start;gap:8px;">
+              <div class="level-item">
+                <button id="lockBtn" class="button is-small is-danger lv-btn-danger">
+                  <span class="icon">
+                    <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="18" height="11" rx="2"/><path d="M7 10V7a5 5 0 0110 0v3"/></svg>
+                  </span>
+                  <span>Lock Vault</span>
+                </button>
+              </div>
+              <div class="level-item">
+                <h3 class="title is-5" style="margin:0;">
+                        <span class="icon is-small"><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 010 20"/></svg></span>
+                        Current Site: <span id="currentDomain" class="has-text-grey">No active tab</span>
+                      </h3>
+              </div>
+            </div>
+            <div class="level-right">
+              <div class="level-item">
+                <button id="addForCurrentBtn" class="button is-small lv-btn-accent" title="Add credential for current site">Add for current site</button>
+              </div>
+            </div>
+        </div>
+
+        <!-- Add Credential Form - Minimalist Design -->
+        <div id="addForm" class="card" style="margin-top: 24px;">
+          <div id="addFormHeader" class="card-header" style="cursor:pointer;">
+            <div class="card-header-title">
+              <span class="icon">
+                <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+              </span>
+              Add New Credential
+                  <span class="icon" style="margin-left:auto;">
+                    <svg id="addFormToggle" class="inline-icon chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                  </span>
+            </div>
+          </div>
+          <div class="card-content" id="addFormContent" style="display: none;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+              <div class="field">
+                <label class="label">
+                  <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px"><circle cx="12" cy="12" r="10"/></svg>
+                  Site/Domain
+                </label>
+                <div class="control">
+                  <div class="group">
+                    <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z" stroke-linejoin="round" stroke-linecap="round"></path></svg>
+                    <input id="siteInput" class="input" placeholder="example.com" spellcheck="false">
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">
+                  <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  Username
+                </label>
+                <div class="control">
+                  <div class="group">
+                    <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon" aria-hidden="true"><path d="M12 12a5 5 0 100-10 5 5 0 000 10zM3 20a9 9 0 0118 0" stroke-linejoin="round" stroke-linecap="round"></path></svg>
+                    <input id="userInput" class="input" placeholder="username or email" spellcheck="false">
+                  </div>
+                </div>
+              </div>
+            </div>
+              <div class="field" style="margin-bottom: 16px;">
+                <label class="label">
+                  <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px"><circle cx="7" cy="17" r="3"/><path d="M10 14l8-8"/></svg>
+                  Password
+                </label>
+              <div class="field has-addons">
+                <div class="control is-expanded">
+                  <div class="group">
+                    <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon" aria-hidden="true"><path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linejoin="round" stroke-linecap="round"></path></svg>
+                    <input id="passInput" class="input" type="password" placeholder="password" spellcheck="false">
+                    <div class="password-toggle" data-target="passInput">
+                      <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="control">
+                  <button id="genBtn" class="button is-info lv-btn-accent" title="Generate secure password">
+                    <span class="icon">
+                      <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 11l6 6M8 3l2 2"/><path d="M3 21l6-6"/></svg>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+              <div class="field">
+                <label class="label">
+                  <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px"><path d="M20.59 13.41L10 3 3 10l10.59 10.59a2 2 0 002.83 0L20.59 16.24a2 2 0 000-2.83z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>
+                  Tags (optional)
+                </label>
+                <div class="control">
+                  <input id="tagsInput" class="input" placeholder="work, personal, etc." spellcheck="false">
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">
+                  <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px"><path d="M3 7v10a2 2 0 002 2h10l6-6V7a2 2 0 00-2-2H5a2 2 0 00-2 2z"/></svg>
+                  Notes (optional)
+                </label>
+                <div class="control">
+                  <input id="notesInput" class="input" placeholder="additional notes" spellcheck="false">
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <button id="addBtn" class="button is-primary lv-btn-primary is-fullwidth">
+                  <span class="icon">
+                    <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+                  </span>
+                  Add Credential
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Credentials List - Minimalist Design -->
+        <div id="list">
+          <!-- Credentials will be populated here -->
+        </div>
+
+        <!-- Add New Credential Button (removed duplicate) -->
+      </div>
+
+      <!-- Settings Tab -->
+      <div id="settings-tab" class="tab-content" style="display:none">
+        <!-- Security Settings -->
+        <div class="card mb-4">
+          <div class="card-header"><div class="card-header-title">Security & Privacy</div></div>
+          <div class="card-content">
+            <div class="field">
+              <label class="checkbox"><input id="autoSave" type="checkbox"> <strong>Auto-save credentials</strong></label>
+            </div>
+            <div class="field">
+              <label class="checkbox"><input id="autoFill" type="checkbox"> <strong>Show autofill suggestions</strong></label>
+            </div>
+            <div class="field">
+              <label class="checkbox"><input id="autoFillOnLoad" type="checkbox"> <strong>Auto-fill on load (last used)</strong></label>
+            </div>
+                <div id="autofillTutorial" class="card" style="display:none; margin-top:12px;">
+                  <div class="card-content">
+                    <div style="font-weight:600; margin-bottom:6px;">Make OpenVault the default autofill</div>
+                    <div style="font-size:13px; color:var(--warm-gray); margin-bottom:10px;">To avoid Chrome offering its password manager over OpenVault, open Chrome's Passwords settings and turn off "Offer to save passwords" / "Auto Sign-in" (if desired).</div>
+                    <div style="display:flex; gap:8px;">
+                      <button id="openChromePasswordsBtn" class="button lv-btn-accent">Open Chrome Passwords Settings</button>
+                      <button id="autofillTutorialDismiss" class="button">Dismiss</button>
+                    </div>
+                  </div>
+                </div>
+            <div class="field">
+              <label class="label">Auto-lock vault after (minutes)</label>
+              <div class="control"><input id="lockTimeout" class="input" type="number" value="5" min="0" max="1440" step="1"></div>
+            </div>
+            <div class="field">
+              <label class="checkbox"><input id="enableLiveChecker" type="checkbox"> <strong>Enable live password strength checker on pages</strong></label>
+            </div>
+            <div class="field">
+              <label class="checkbox"><input id="stayUnlockedSession" type="checkbox"> <strong>Stay unlocked for this browser session</strong></label>
+              <p style="font-size:12px;color:var(--warm-gray);margin-top:6px;">When enabled, the vault will remain unlocked until the browser is closed.</p>
+            </div>
+            <div class="field"><div class="control"><button id="saveSettingsBtn" class="button is-primary lv-btn-primary">Save Settings</button></div></div>
+          </div>
+        </div>
+
+        <!-- Data Management -->
+        <div class="card mb-4">
+          <div class="card-header"><div class="card-header-title">Data Management</div></div>
+          <div class="card-content">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+              <button id="exportBtn" class="button is-info lv-btn-accent">Export Encrypted Backup</button>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <button id="importBtn" class="button lv-btn-ghost">Import Backup</button>
+              <!-- Clear Vault button removed from UI -->
+            </div>
+            <input id="fileInput" type="file" accept=".json" style="display:none">
+          </div>
+        </div>
+
+        <!-- Advanced Settings -->
+        <div class="card mb-4">
+          <div class="card-header"><div class="card-header-title">Advanced Settings</div></div>
+          <div class="card-content">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+              <button id="viewAuditBtn" class="button lv-btn-ghost">View Audit Log</button>
+              <button id="clearAuditBtn" class="button is-danger lv-btn-danger">Clear Audit Log</button>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <button id="clearDatabaseBtn" class="button is-danger lv-btn-danger">Clear Database</button>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <label class="checkbox" style="margin:0"><input id="keepAliveEnabled" type="checkbox"> <strong style="margin-left:6px">Keep alive</strong></label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- About & Statistics -->
+        <div class="card">
+          <div class="card-header"><div class="card-header-title">About & Statistics</div></div>
+          <div class="card-content">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:12px;">
+              <div><div class="stat-number" id="statTotalCredentials">0</div><div class="stat-label">Credentials</div></div>
+              <div><div class="stat-number" id="statUniqueDomains">0</div><div class="stat-label">Domains</div></div>
+              <div><div class="stat-number" id="statVaultSize">0 B</div><div class="stat-label">Vault Size</div></div>
+            </div>
+            <div class="subtle-panel">
+              <div style="font-size:14px;color:var(--warm-gray);margin-bottom:6px;">Last modified: <span id="statLastModified">Never</span></div>
+              <div style="font-size:14px;color:var(--warm-gray);">All data is encrypted locally</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Generator Tab -->
+      <div id="generator-tab" class="tab-content" style="display:none">
+        <div class="card mb-4">
+          <div class="card-header">
+            <div class="card-header-title">
+              <span class="icon">
+                <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 11l6 6M8 3l2 2"/><path d="M3 21l6-6"/></svg>
+              </span>
+              Password Generator
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="field">
+              <label class="label">
+                <span class="icon mr-2">
+                  <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M7 10v4"/><path d="M12 10v4"/><path d="M17 10v4"/></svg>
+                </span>
+                Password Length
+              </label>
+              <div class="control" style="display:flex;align-items:center;gap:12px;">
+                <input id="genLen" class="slider" type="range" min="8" max="64" value="16" step="1" style="flex:1;">
+                <input id="genLenNumber" type="number" min="8" max="64" value="16" class="input" style="width:76px;padding:6px 8px;">
+                <output id="genLenOutput" class="ml-3 has-text-weight-bold has-text-primary">16</output>
+                <span class="has-text-grey">chars</span>
+              </div>
+              <p class="help">
+                <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                Longer passwords are more secure
+              </p>
+            </div>
+
+            <div class="character-options">
+              <div class="field">
+                <div class="control">
+                  <label class="checkbox">
+                    <input id="genUpper" type="checkbox" checked>
+                    <span class="char-icon" aria-hidden="true">A</span>
+                    <strong>Uppercase letters</strong> (A-Z)
+                  </label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="control">
+                  <label class="checkbox">
+                    <input id="genLower" type="checkbox" checked>
+                    <span class="char-icon" aria-hidden="true">a</span>
+                    <strong>Lowercase letters</strong> (a-z)
+                  </label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="control">
+                  <label class="checkbox">
+                    <input id="genNumbers" type="checkbox" checked>
+                    <span class="icon mr-2">
+                      <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4l3 16"/><path d="M17 4l-3 16"/><path d="M3 10h18"/><path d="M3 14h18"/></svg>
+                    </span>
+                    <strong>Numbers</strong> (0-9)
+                  </label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="control">
+                  <label class="checkbox">
+                    <input id="genSymbols" type="checkbox" checked>
+                    <span class="icon mr-2">
+                      <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v12"/><path d="M6 9l12 6"/><path d="M6 15l12-6"/></svg>
+                    </span>
+                    <strong>Symbols</strong> (!@#$%^&*)
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <button id="generateBtn" class="button is-primary lv-btn-primary is-fullwidth">
+                    <span class="icon">
+                      <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 11l6 6M8 3l2 2"/><path d="M3 21l6-6"/></svg>
+                    </span>
+                  <span>Generate Secure Password</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="field">
+                <label class="label">
+                <span class="icon mr-2">
+                  <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="17" r="3"/><path d="M10 14l8-8"/></svg>
+                </span>
+                Generated Password
+              </label>
+              <div class="field has-addons">
+                <div class="control is-expanded">
+                  <div class="group">
+                    <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z" stroke-linejoin="round" stroke-linecap="round"></path></svg>
+                    <input id="generatedPass" class="input generated-pass" type="text" readonly placeholder="Click generate to create a password">
+                  </div>
+                </div>
+                <div class="control">
+                  <button id="copyGenBtn" class="button is-info lv-btn-accent" title="Copy to clipboard">
+                    <span class="icon">
+                      <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">
+                  <span class="icon mr-2">
+                  <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0118 0"/><path d="M12 12v-6"/></svg>
+                </span>
+                Password Strength
+              </label>
+              <div class="control">
+                <div id="strengthBar" class="strength-bar">
+                  <div id="strengthFill" class="strength-fill"></div>
+                </div>
+                <p id="strengthText" class="help has-text-weight-semibold mt-2">
+                  <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px"><path d="M12 2l7 4v5c0 5-3.5 9-7 10-3.5-1-7-5-7-10V6l7-4z"/></svg>
+                  Password strength: Weak
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Security Tab -->
+      <div id="security-tab" class="tab-content" style="display:none">
+        <div class="card">
+          <div class="card-header"><div class="card-header-title">Security Health Dashboard</div></div>
+          <div class="card-content">
+            <div style="display:flex;gap:8px;margin-bottom:12px;">
+              <button id="runHealthCheckBtn" class="button is-info lv-btn-accent">Run Health Check</button>
+              <button id="refreshHealthBtn" class="button">Refresh</button>
+            </div>
+            <div id="healthSummary" style="margin-bottom:12px;">No data yet. Run health check to analyze your vault.</div>
+            <div id="healthCharts" style="display:flex;gap:12px;align-items:center;margin-bottom:12px;">
+              <div id="healthPie" style="width:160px;height:160px"></div>
+              <div id="healthDonut" style="width:80px;height:80px"></div>
+              <div id="healthBar" style="flex:1;height:120px"></div>
+            </div>
+            <div id="healthList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="vendor/charts.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>
+
+<!-- Confirm Reset Modal -->
+<div id="confirmResetModal" class="modal" style="display:none;">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Confirm Clear Database</p>
+    </header>
+    <section class="modal-card-body">
+      <div class="field">
+        <label class="label">Enter Master Password</label>
+        <div class="control">
+          <input id="confirmResetPassword" class="input" type="password" placeholder="Master password" autocomplete="current-password" spellcheck="false">
+        </div>
+      </div>
+      <p class="help">This will permanently delete all vault data if the password is correct.</p>
+    </section>
+    <footer class="modal-card-foot">
+      <button id="confirmResetCancel" class="button">Cancel</button>
+      <button id="confirmResetSubmit" class="button is-danger">Clear Database</button>
+    </footer>
+  </div>
+</div>
+
+<!-- Edit Credential Modal -->
+<div id="editCredentialModal" class="modal" style="display:none;">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Edit Credential</p>
+    </header>
+    <section class="modal-card-body">
+      <div class="field">
+        <label class="label">Site/Domain</label>
+        <div class="control"><input id="editSiteInput" class="input" placeholder="example.com" spellcheck="false"></div>
+      </div>
+      <div class="field">
+        <label class="label">Username</label>
+        <div class="control"><input id="editUserInput" class="input" placeholder="username or email" spellcheck="false"></div>
+      </div>
+      <div class="field">
+        <label class="label">Password</label>
+        <div class="control"><input id="editPassInput" class="input" type="text" spellcheck="false"></div>
+      </div>
+      <div class="field">
+        <label class="label">Tags</label>
+        <div class="control"><input id="editTagsInput" class="input" placeholder="work, personal" spellcheck="false"></div>
+      </div>
+      <div class="field">
+        <label class="label">Notes</label>
+        <div class="control"><input id="editNotesInput" class="input" placeholder="notes" spellcheck="false"></div>
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button id="editCredentialCancel" class="button">Cancel</button>
+      <button id="editCredentialSave" class="button is-primary">Save changes</button>
+    </footer>
+  </div>
+</div>

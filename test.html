@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenVault - Test Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="ui.css">
+    <style>
+        body {
+            background: #f8fafc;
+            padding: 20px;
+        }
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin-bottom: 32px;
+        }
+                            <div>
+                                <h1 style="font-size: 24px; font-weight: 600; color: #1a1a1a; margin: 0; letter-spacing: -0.02em;">OpenVault</h1>
+                                <p style="font-size: 14px; color: #6b7280; margin: 4px 0 0 0; font-weight: 400;">Secure password management</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="button is-small">
+                                <span class="icon">
+                                    <i class="fas fa-question-circle"></i>
+                                </span>
+                            </button>
+                            <button class="button is-small">
+                                <span class="icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 16px; color: #1a1a1a;">Form Elements</h2>
+            <div class="card">
+                <div class="card-content">
+                    <div class="field">
+                        <label class="label">
+                            <i class="fas fa-key" style="margin-right: 8px;"></i>
+                            Master Password
+                        </label>
+                        <div class="control has-icons-left has-icons-right">
+                            <input class="input" type="password" placeholder="Enter master password">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-key"></i>
+                            </span>
+                            <span class="icon is-small is-right password-toggle" data-target="test-password">
+                                <i class="fas fa-eye"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-primary" style="width: 100%;">
+                                <i class="fas fa-unlock" style="margin-right: 8px;"></i>
+                                Unlock Vault
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 16px; color: #1a1a1a;">Statistics</h2>
+            <div class="card">
+                <div class="card-content">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 16px;">
+                        <div class="stat-item">
+                            <div class="stat-number">42</div>
+                            <div class="stat-label">CREDENTIALS</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">18</div>
+                            <div class="stat-label">DOMAINS</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">2.4 KB</div>
+                            <div class="stat-label">VAULT SIZE</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 16px; color: #1a1a1a;">List Items</h2>
+            <div class="card">
+                <div class="card-content">
+                    <div class="list-item">
+                        <div class="item-info">
+                            <div class="item-title">github.com</div>
+                            <div class="item-subtitle">
+                                <span>john.doe@example.com</span>
+                                <span>Last used: 2 hours ago</span>
+                            </div>
+                        </div>
+                        <div class="item-actions">
+                            <button class="copy-btn">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="copy-btn">
+                                <i class="fas fa-user"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="list-item">
+                        <div class="item-info">
+                            <div class="item-title">google.com</div>
+                            <div class="item-subtitle">
+                                <span>user@gmail.com</span>
+                                <span>Last used: 1 day ago</span>
+                            </div>
+                        </div>
+                        <div class="item-actions">
+                            <button class="copy-btn is-success">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="copy-btn">
+                                <i class="fas fa-user"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 16px; color: #1a1a1a;">Buttons</h2>
+            <div class="card">
+                <div class="card-content">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
+                        <button class="button is-primary">
+                            <i class="fas fa-plus" style="margin-right: 8px;"></i>
+                            Primary
+                        </button>
+                        <button class="button is-info">
+                            <i class="fas fa-download" style="margin-right: 8px;"></i>
+                            Info
+                        </button>
+                        <button class="button is-success">
+                            <i class="fas fa-check" style="margin-right: 8px;"></i>
+                            Success
+                        </button>
+                        <button class="button is-danger">
+                            <i class="fas fa-trash" style="margin-right: 8px;"></i>
+                            Danger
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="jquery.min.js"></script>
+    <script>
+        // Password toggle functionality
+        $('.password-toggle').on('click', function() {
+            const targetId = $(this).data('target');
+            const input = $('#' + targetId);
+            const icon = $(this).find('i');
+
+            if (input.attr('type') === 'password') {
+                input.attr('type', 'text');
+                icon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                input.attr('type', 'password');
+                icon.removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+    </script>
+</body>
+</html>
